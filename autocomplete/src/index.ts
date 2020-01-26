@@ -58,12 +58,13 @@ export function autocomplete(config: Partial<AutocompleteData> = {}): Extension 
       ArrowDown: moveCompletion("down"),
       ArrowUp: moveCompletion("up"),
       Enter: acceptCompletion,
+      Tab: acceptCompletion,
       Escape: closeCompletion
     }))
   ]
 }
 
-function moveCompletion(dir: string) {
+export function moveCompletion(dir: string) {
   return (view: EditorView) => {
     let active = view.state.field(activeCompletion)
     if (!(active instanceof ActiveCompletion)) return false
@@ -73,7 +74,7 @@ function moveCompletion(dir: string) {
   }
 }
 
-function acceptCompletion(view: EditorView) {
+export function acceptCompletion(view: EditorView) {
   let active = view.state.field(activeCompletion)
   if (!(active instanceof ActiveCompletion)) return false
   applyCompletion(view, active.options[active.selected])
@@ -87,7 +88,11 @@ export function startCompletion(view: EditorView) {
   return true
 }
 
-function applyCompletion(view: EditorView, option: Completion) {
+export function getActiveCompletion(view: EditorView) {
+  return view.state.field(activeCompletion)
+}
+
+export function applyCompletion(view: EditorView, option: Completion) {
   let apply = option.apply || option.label
   // FIXME make sure option.start/end still point at the current
   // doc, or keep a mapping in an active completion
@@ -99,7 +104,7 @@ function applyCompletion(view: EditorView, option: Completion) {
   }
 }
 
-function closeCompletion(view: EditorView) {
+export function closeCompletion(view: EditorView) {
   let active = view.state.field(activeCompletion)
   if (active == null) return false
   view.dispatch(view.state.t().annotate(setActiveCompletion(null)))
@@ -232,7 +237,7 @@ const style = EditorView.theme({
     },
 
     "& > li[aria-selected]": {
-      background_fallback: "#bdf",
+      background_fallback: "#D6A2AD",
       background: "Highlight",
       color_fallback: "white",
       color: "HighlightText"
