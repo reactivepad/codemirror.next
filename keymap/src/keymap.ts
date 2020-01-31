@@ -82,7 +82,6 @@ export class NormalizedKeymap<T> {
   /// Look up the binding for the given keyboard event, or `undefined`
   /// if none is found.
   get(event: KeyboardEvent): T | undefined {
-    console.log("keyName", keyName)
     const name = keyName(event), isChar = name.length == 1 && name != " "
     const direct = this.map[modifiers(name, event, !isChar)]
     if (direct) return direct
