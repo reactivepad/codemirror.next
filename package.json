@@ -1,5 +1,5 @@
 {
-  "name": "@codemirror/next",
+  "name": "@reactivepad/codemirror-next",
   "version": "0.3.0",
   "description": "Text/code editor component",
   "scripts": {
